@@ -37,4 +37,4 @@ export void saxpy_ispc_withtasks(uniform int N,
 
     launch[N/span] saxpy_ispc_task(N, span, scale, X, Y, result);//launch 64个元素
 }
-//内存带宽限制 2000万个元素
+//内存带宽限制 2000万个元素 每次4个操作 受限于内存传输的速度 不会写
