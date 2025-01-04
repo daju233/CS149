@@ -1,6 +1,10 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <cmath>
+#include <cstdio>
+#include <immintrin.h>
+#include <omp.h>
 
 
 void sqrtSerial(int N,
@@ -27,3 +31,10 @@ void sqrtSerial(int N,
     }
 }
 
+void sqrt_avx(int N,
+                float initialGuess,
+                float values[],
+                float output[]){
+    
+
+}

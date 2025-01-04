@@ -2,13 +2,13 @@
 #include <algorithm>
 #include <pthread.h>
 #include <math.h>
-
 #include "CycleTimer.h"
 #include "sqrt_ispc.h"
 
 using namespace ispc;
 
 extern void sqrtSerial(int N, float startGuess, float* values, float* output);
+extern void sqrt_avx(int N, float startGuess, float* values, float* output);
 
 static void verifyResult(int N, float* result, float* gold) {
     for (int i=0; i<N; i++) {
@@ -34,7 +34,15 @@ int main() {
         // to you generate best and worse-case speedups
         
         // starter code populates array with random input values
-        values[i] = .001f + 2.998f * static_cast<float>(rand()) / RAND_MAX;
+        // values[i] = .001f + 2.998f * static_cast<float>(rand()) / RAND_MAX;
+        // if(i%2==0){//并行提速最低的思路，让每个通道的迭代次数不一样
+        //     values[i]=2;//2.99反而更快，可能跟牛顿法有关
+        // }else{
+        //     values[i]=1;
+        // }
+        values[i] = 2.9999f;//并行提速最高的思路，和上面的反过来，并且迭代次数尽可能多以展现并行性
+
+        //额外题目没做，以后再做
     }
 
     // generate a gold version to check results

@@ -3,6 +3,7 @@
 
 #include "CycleTimer.h"
 #include "saxpy_ispc.h"
+#include <prefetch.h>
 
 extern void saxpySerial(int N, float a, float* X, float* Y, float* result);
 
