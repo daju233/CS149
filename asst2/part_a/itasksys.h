@@ -7,7 +7,6 @@ typedef int TaskID;
 class IRunnable {
     public:
         virtual ~IRunnable();
-
         /*
           Executes an instance of the task as part of a bulk task launch.
           
@@ -38,6 +37,13 @@ class ITaskSystem {
           will return only when the execution of all tasks is
           complete.
         */
+        /*
+        执行 num_total_tasks 的批量任务启动。 任务
+        执行与调用线程同步，因此 run（）
+        仅当所有任务的执行
+        完成。
+        */
+
         virtual void run(IRunnable* runnable, int num_total_tasks) = 0;
 
         /*
@@ -58,6 +64,24 @@ class ITaskSystem {
           runAsnycWithDeps() to specify a dependency of some future
           bulk task launch on this bulk task launch.
          */
+        /*
+          执行异步批量任务启动
+          num_total_tasks，但依赖于先前启动的任务
+          任务。
+
+
+          任务运行时必须完成任务的执行
+          与中引用的所有批量任务启动相关联
+          开始执行*任何*任务之前的数组`deps`
+          此批量任务启动。
+
+          调用者必须调用sync()以保证完成
+          此批量任务启动中的任务。
+
+          返回一个可在后续调用中使用的标识符
+          runAsnycWithDeps() 指定某个未来的依赖项
+          在此批量任务启动时批量任务启动。
+        */
         virtual TaskID runAsyncWithDeps(IRunnable* runnable, int num_total_tasks,
                                         const std::vector<TaskID>& deps) = 0;
 
