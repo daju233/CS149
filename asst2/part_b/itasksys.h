@@ -5,10 +5,6 @@
 
 typedef int TaskID;
 
-class TaskContext{
-  public:
-};
-
 class IRunnable
 {
 public:

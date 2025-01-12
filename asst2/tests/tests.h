@@ -9,6 +9,7 @@
 
 #include "CycleTimer.h"
 #include "itasksys.h"
+#include <iostream>
 
 /*
 Sync tests
@@ -553,9 +554,8 @@ TestResults simpleTest(ITaskSystem* t, bool do_async) {
         }
     }
     results.time = end_time - start_time;
-
+    printf("iloveyou");
     delete [] array;
-
     return results;
 }
 

@@ -66,6 +66,20 @@ public:
     void sync();
 };
 
+class TaskContext
+{
+public:
+    bool is_finished;
+    int task_id;
+    std::condition_variable cv;//不可拷贝
+    std::mutex mutex;
+    bool isfinished{false};
+    TaskContext(int cur_task_id)
+    {
+        task_id = cur_task_id;
+    }
+};
+
 /*
  * TaskSystemParallelThreadPoolSleeping: This class is the student's
  * optimized implementation of a parallel task execution engine that uses
@@ -76,17 +90,17 @@ class TaskSystemParallelThreadPoolSleeping : public ITaskSystem
 {
 
 public:
-    std::map<TaskID,bool> finish_tasks;
+    // std::map<TaskID,bool> finish_tasks;
 
     std::condition_variable condition;
     std::condition_variable finish_condition;
-    std::condition_variable dep_condition;
+    // std::condition_variable dep_condition;
 
-
+    std::map<TaskID,TaskContext*> taskContexts;
     std::mutex queue_mutex;
     std::mutex finish_mutex;
     std::mutex dep_mutex;
-    int taskID{0};
+    std::atomic<int> taskID{0};
     std::atomic_bool isstop{false};
     std::atomic<int> count_total_tasks;
     std::vector<std::thread> workers;
